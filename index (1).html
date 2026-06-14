@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VibeWear — Wear the Vibe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#16151A;
+    --cream:#F5F3EE;
+    --lime:#C8FF4D;
+    --lavender:#A89FE8;
+    --coral:#FF6B4A;
+    --gray:#8A8A92;
+    --line:rgba(245,243,238,0.12);
+    --maxw:1280px;
+    --radius:14px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--charcoal);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  h1,h2,h3{font-family:'Archivo Black',sans-serif;line-height:1.05;letter-spacing:-0.01em;text-transform:uppercase;}
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(245,243,238,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(22,21,26,0.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;}
+  .logo{
+    font-family:'Archivo Black',sans-serif;
+    font-size:24px;letter-spacing:-0.02em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo span{
+    background:var(--lime);
+    padding:2px 8px;
+    border-radius:6px;
+    transform:rotate(-3deg);
+    display:inline-block;
+  }
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{
+    font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;
+    position:relative;padding:4px 0;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;
+    background:var(--coral);transition:width .25s var(--ease);
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--charcoal);color:var(--cream);
+    padding:10px 22px;border-radius:999px;font-weight:700;
+    font-size:13px;text-transform:uppercase;letter-spacing:0.08em;
+    border:1px solid var(--charcoal);transition:all .2s var(--ease);
+  }
+  .nav-cta:hover{background:var(--lime);color:var(--charcoal);border-color:var(--lime);}
+  .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;}
+  .menu-toggle span{width:24px;height:2px;background:var(--charcoal);border-radius:2px;transition:.25s var(--ease);}
+
+  /* ============ MARQUEE ============ */
+  .marquee{
+    background:var(--charcoal);color:var(--cream);
+    overflow:hidden;white-space:nowrap;border-bottom:1px solid var(--line);
+    padding:10px 0;
+  }
+  .marquee-track{display:flex;width:max-content;animation:scroll-left 28s linear infinite;}
+  .marquee-track span{
+    font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+    padding:0 28px;display:flex;align-items:center;gap:28px;
+  }
+  .marquee-track span::after{content:'◆';color:var(--lime);font-size:10px;}
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    padding:80px 0 0;
+    overflow:hidden;
+    background:var(--cream);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:40px;
+    min-height:80vh;
+  }
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--charcoal);color:var(--cream);
+    padding:8px 16px;border-radius:999px;margin-bottom:24px;
+  }
+  .hero-eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--lime);}
+  .hero h1{
+    font-size:clamp(48px,8vw,96px);
+    margin-bottom:24px;
+  }
+  .hero h1 .hl-coral{color:var(--coral);}
+  .hero h1 .hl-outline{
+    -webkit-text-stroke:2px var(--charcoal);
+    color:transparent;
+  }
+  .hero p{
+    font-size:18px;color:#55545C;max-width:440px;margin-bottom:36px;line-height:1.6;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:48px;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:18px 36px;border-radius:999px;
+    font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:0.08em;
+    border:2px solid var(--charcoal);cursor:pointer;
+    transition:transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .btn-primary{background:var(--charcoal);color:var(--cream);}
+  .btn-primary:hover{background:var(--coral);border-color:var(--coral);color:var(--charcoal);transform:translateY(-3px);}
+  .btn-ghost{background:transparent;color:var(--charcoal);}
+  .btn-ghost:hover{background:var(--charcoal);color:var(--cream);transform:translateY(-3px);}
+
+  .hero-stats{display:flex;gap:40px;}
+  .hero-stats div{display:flex;flex-direction:column;}
+  .hero-stats strong{font-family:'Archivo Black',sans-serif;font-size:32px;}
+  .hero-stats span{font-size:12px;color:#7A7980;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;}
+
+  .hero-visual{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:24px;
+    overflow:hidden;
+    background:var(--lavender);
+    clip-path:polygon(8% 0, 100% 0, 100% 92%, 92% 100%, 0 100%, 0 8%);
+  }
+  .hero-visual img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;top:24px;right:24px;
+    background:var(--lime);color:var(--charcoal);
+    width:96px;height:96px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Archivo Black',sans-serif;font-size:13px;line-height:1.2;
+    transform:rotate(8deg);
+    box-shadow:0 8px 0 rgba(22,21,26,0.15);
+  }
+  .hero-tag{
+    position:absolute;bottom:24px;left:24px;
+    background:var(--cream);color:var(--charcoal);
+    padding:14px 20px;border-radius:14px;
+    font-weight:700;font-size:14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .hero-tag .dot{width:10px;height:10px;border-radius:50%;background:var(--coral);}
+
+  /* ============ SECTION HEADERS ============ */
+  .section{padding:96px 0;}
+  .section-tight{padding-top:0;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    margin-bottom:48px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(36px,6vw,64px);}
+  .section-head p{color:#7A7980;font-size:16px;max-width:340px;line-height:1.6;}
+  .eyebrow-label{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--coral);margin-bottom:12px;
+  }
+
+  /* ============ CATEGORIES ============ */
+  .categories{background:var(--charcoal);color:var(--cream);}
+  .categories .eyebrow-label{color:var(--lime);}
+  .categories .section-head p{color:#A6A5AC;}
+  .cat-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+  }
+  .cat-card{
+    position:relative;border-radius:18px;overflow:hidden;
+    aspect-ratio:3/4;cursor:pointer;
+    border:1px solid var(--line);
+  }
+  .cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+  .cat-card:hover img{transform:scale(1.08);}
+  .cat-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 40%, rgba(22,21,26,0.92) 100%);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:22px;
+  }
+  .cat-overlay h3{font-size:22px;color:var(--cream);margin-bottom:6px;}
+  .cat-overlay span{font-size:13px;color:var(--lime);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;gap:6px;}
+  .cat-card:hover .cat-overlay span{gap:12px;}
+
+  /* ============ PRODUCTS ============ */
+  .product-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .product-card{
+    background:#FFFFFF;border:1px solid rgba(22,21,26,0.08);
+    border-radius:18px;overflow:hidden;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    display:flex;flex-direction:column;
+  }
+  .product-card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(22,21,26,0.08);}
+  .product-media{position:relative;aspect-ratio:1/1.05;overflow:hidden;background:var(--cream);}
+  .product-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+  .product-card:hover .product-media img{transform:scale(1.06);}
+  .product-flag{
+    position:absolute;top:14px;left:14px;
+    background:var(--coral);color:#fff;
+    font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;
+    padding:6px 12px;border-radius:999px;
+  }
+  .product-flag.sale{background:var(--lime);color:var(--charcoal);}
+  .product-quick{
+    position:absolute;bottom:14px;right:14px;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--charcoal);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;border:none;cursor:pointer;
+    opacity:0;transform:translateY(8px);
+    transition:all .3s var(--ease);
+  }
+  .product-card:hover .product-quick{opacity:1;transform:translateY(0);}
+  .product-quick:hover{background:var(--coral);color:var(--charcoal);}
+  .product-info{padding:18px 18px 22px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .product-cat{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;}
+  .product-name{font-size:16px;font-weight:700;}
+  .product-price{display:flex;align-items:center;gap:8px;margin-top:4px;}
+  .product-price strong{font-size:18px;font-weight:800;}
+  .product-price del{font-size:14px;color:var(--gray);}
+
+  /* ============ PROMO BANNER ============ */
+  .promo{
+    background:var(--lavender);
+    border-radius:24px;
+    padding:64px 48px;
+    display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:40px;
+    margin:0 24px;
+  }
+  .promo-text .eyebrow-label{color:var(--charcoal);background:var(--lime);padding:6px 14px;border-radius:999px;}
+  .promo-text h2{font-size:clamp(32px,6vw,56px);margin-top:18px;color:var(--charcoal);}
+  .promo-text p{font-size:17px;color:rgba(22,21,26,0.7);margin:18px 0 28px;max-width:420px;}
+  .promo-code{
+    background:var(--charcoal);color:var(--lime);
+    font-family:'Archivo Black',sans-serif;font-size:14px;
+    padding:14px 22px;border-radius:12px;display:inline-flex;align-items:center;gap:14px;
+    margin-bottom:28px;letter-spacing:0.08em;
+  }
+  .promo-code span{color:var(--cream);font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-transform:none;letter-spacing:normal;}
+  .promo-visual{
+    aspect-ratio:1/1;border-radius:18px;overflow:hidden;
+  }
+  .promo-visual img{width:100%;height:100%;object-fit:cover;}
+
+  /* ============ NEWSLETTER ============ */
+  .newsletter{
+    background:var(--charcoal);color:var(--cream);
+    border-radius:24px;margin:96px 24px 0;
+    padding:64px 48px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:24px;
+  }
+  .newsletter h2{font-size:clamp(32px,6vw,56px);max-width:680px;}
+  .newsletter p{color:#A6A5AC;font-size:16px;max-width:480px;}
+  .newsletter-form{
+    display:flex;gap:12px;width:100%;max-width:480px;margin-top:8px;flex-wrap:wrap;
+  }
+  .newsletter-form input{
+    flex:1;min-width:200px;padding:18px 24px;border-radius:999px;
+    border:1px solid var(--line);background:rgba(245,243,238,0.06);
+    color:var(--cream);font-size:15px;font-family:'Inter',sans-serif;
+    outline:none;transition:border-color .2s var(--ease);
+  }
+  .newsletter-form input::placeholder{color:#7A7980;}
+  .newsletter-form input:focus{border-color:var(--lime);}
+  .newsletter-note{font-size:13px;color:#6E6D75;}
+
+  /* ============ FOOTER ============ */
+  footer{padding:80px 0 32px;}
+  .footer-top{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;margin-bottom:64px;
+  }
+  .footer-brand .logo{margin-bottom:16px;}
+  .footer-brand p{color:#7A7980;font-size:15px;line-height:1.6;max-width:280px;margin-bottom:20px;}
+  .footer-social{display:flex;gap:12px;}
+  .footer-social a{
+    width:40px;height:40px;border-radius:50%;border:1px solid rgba(22,21,26,0.12);
+    display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;
+    transition:all .2s var(--ease);
+  }
+  .footer-social a:hover{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal);}
+  .footer-col h4{font-size:13px;text-transform:uppercase;letter-spacing:0.12em;font-weight:800;margin-bottom:20px;}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{color:#7A7980;font-size:15px;transition:color .2s var(--ease);}
+  .footer-col a:hover{color:var(--coral);}
+  .footer-bottom{
+    border-top:1px solid rgba(22,21,26,0.08);padding-top:24px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    font-size:13px;color:#9B9AA0;
+  }
+
+  /* ============ ANIMATIONS / REVEAL ============ */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.show{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{animation:none;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    *{transition:none !important;}
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px){
+    .hero-grid{grid-template-columns:1fr;min-height:auto;gap:48px;}
+    .hero{padding-top:48px;}
+    .hero-visual{max-width:520px;margin:0 auto;width:100%;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .product-grid{grid-template-columns:repeat(2,1fr);}
+    .promo{grid-template-columns:1fr;padding:40px 28px;text-align:left;}
+    .promo-visual{order:-1;max-width:360px;}
+    .footer-top{grid-template-columns:1fr 1fr;gap:40px;}
+    .footer-brand{grid-column:1/-1;}
+  }
+
+  @media (max-width: 720px){
+    .nav-links{
+      position:fixed;top:64px;left:0;right:0;
+      background:var(--cream);
+      flex-direction:column;align-items:flex-start;gap:0;
+      padding:8px 24px 24px;
+      border-bottom:1px solid rgba(22,21,26,0.08);
+      transform:translateY(-110%);opacity:0;
+      transition:transform .3s var(--ease), opacity .3s var(--ease);
+      pointer-events:none;
+    }
+    .nav-links.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+    .nav-links a{width:100%;padding:14px 0;border-bottom:1px solid rgba(22,21,26,0.06);}
+    .nav-links .nav-cta{margin-top:14px;text-align:center;}
+    .menu-toggle{display:flex;}
+    .menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .menu-toggle.open span:nth-child(2){opacity:0;}
+    .menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+    .hero h1{font-size:clamp(40px,12vw,64px);}
+    .hero-stats{gap:24px;flex-wrap:wrap;}
+    .section{padding:64px 0;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+    .product-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+    .product-info{padding:14px;}
+    .section-head{flex-direction:column;align-items:flex-start;}
+    .promo{margin:0 16px;border-radius:18px;}
+    .newsletter{margin:64px 16px 0;border-radius:18px;padding:48px 24px;}
+    .newsletter-form{flex-direction:column;}
+    .newsletter-form input{width:100%;}
+    .footer-top{grid-template-columns:1fr;gap:32px;}
+    .footer-bottom{flex-direction:column;text-align:center;}
+  }
+
+  @media (max-width: 420px){
+    .cat-grid{grid-template-columns:1fr 1fr;}
+    .hero-badge{width:78px;height:78px;font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Free shipping on orders over $60</span>
+      <span>New drop: Solstice collection</span>
+      <span>Use code VIBE20 for 20% off</span>
+      <span>Free shipping on orders over $60</span>
+      <span>New drop: Solstice collection</span>
+      <span>Use code VIBE20 for 20% off</span>
+    </div>
+  </div>
+  <nav class="nav wrap">
+    <a href="#" class="logo">vibe<span>wear</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#categories">Categories</a>
+      <a href="#products">Shop</a>
+      <a href="#promo">Sale</a>
+      <a href="#newsletter">Join</a>
+      <a href="#" class="nav-cta">Shop now</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-content reveal show">
+      <div class="hero-eyebrow">New season, new fits</div>
+      <h1>
+        Dress in your <span class="hl-coral">vibe</span>,<br>
+        own the <span class="hl-outline">street</span>
+      </h1>
+      <p>VibeWear drops bold streetwear and everyday essentials built for movement, made to last, and priced to keep your rotation fresh.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">Shop the drop</a>
+        <a href="#categories" class="btn btn-ghost">Browse categories</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <strong>120+</strong>
+          <span>New styles weekly</span>
+        </div>
+        <div>
+          <strong>4.8/5</strong>
+          <span>From 12k reviews</span>
+        </div>
+        <div>
+          <strong>48h</strong>
+          <span>Express delivery</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual reveal show">
+      <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=900&h=1100&fit=crop" alt="Man wearing a VibeWear oversized hoodie and cargo pants">
+      <div class="hero-badge">20% off first order</div>
+      <div class="hero-tag"><span class="dot"></span> 432 sold this week</div>
+    </div>
+  </div>
+</section>
+
+<section class="section categories" id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow-label">Shop by category</span>
+        <h2 class="reveal">Find your<br>lane</h2>
+      </div>
+      <p class="reveal">From street-ready outerwear to easy basics — every category is stocked with pieces that move with you.</p>
+    </div>
+    <div class="cat-grid">
+      <a href="#products" class="cat-card reveal">
+        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=650&fit=crop" alt="Men's hoodies and outerwear category">
+        <div class="cat-overlay">
+          <h3>Hoodies</h3>
+          <span>Shop now →</span>
+        </div>
+      </a>
+      <a href="#products" class="cat-card reveal">
+        <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=650&fit=crop" alt="Men's denim and pants category">
+        <div class="cat-overlay">
+          <h3>Bottoms</h3>
+          <span>Shop now →</span>
+        </div>
+      </a>
+      <a href="#products" class="cat-card reveal">
+        <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=650&fit=crop" alt="Men's graphic tees category">
+        <div class="cat-overlay">
+          <h3>Tees</h3>
+          <span>Shop now →</span>
+        </div>
+      </a>
+      <a href="#products" class="cat-card reveal">
+        <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=500&h=650&fit=crop" alt="Men's accessories category">
+        <div class="cat-overlay">
+          <h3>Accessories</h3>
+          <span>Shop now →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow-label">Featured drops</span>
+        <h2 class="reveal">Best of<br>the bunch</h2>
+      </div>
+      <p class="reveal">Hand-picked favorites from this week's drop — limited stock, restocks not guaranteed.</p>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <span class="product-flag">New</span>
+          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=550&fit=crop" alt="Man wearing oversized charcoal hoodie">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Hoodies</span>
+          <span class="product-name">Drift oversized hoodie</span>
+          <div class="product-price"><strong>$58</strong></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <span class="product-flag sale">-20%</span>
+          <img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&h=550&fit=crop" alt="Man wearing wide leg cargo pants">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Bottoms</span>
+          <span class="product-name">Roam cargo pants</span>
+          <div class="product-price"><strong>$47</strong> <del>$59</del></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&h=550&fit=crop" alt="Man wearing graphic print t-shirt">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Tees</span>
+          <span class="product-name">Solstice graphic tee</span>
+          <div class="product-price"><strong>$28</strong></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <span class="product-flag">New</span>
+          <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=500&h=550&fit=crop" alt="Men's bucket hat accessory">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Accessories</span>
+          <span class="product-name">Currents bucket hat</span>
+          <div class="product-price"><strong>$24</strong></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=500&h=550&fit=crop" alt="Man wearing cropped denim jacket">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Outerwear</span>
+          <span class="product-name">Haze cropped jacket</span>
+          <div class="product-price"><strong>$72</strong></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <span class="product-flag sale">-15%</span>
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&h=550&fit=crop" alt="Man wearing athletic shorts">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Bottoms</span>
+          <span class="product-name">Pace running shorts</span>
+          <div class="product-price"><strong>$30</strong> <del>$35</del></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <img src="https://images.unsplash.com/photo-1614975059251-992f11792b9f?w=500&h=550&fit=crop" alt="Man wearing knit sweater">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Knitwear</span>
+          <span class="product-name">Lowtide knit sweater</span>
+          <div class="product-price"><strong>$64</strong></div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-media">
+          <span class="product-flag">New</span>
+          <img src="https://images.unsplash.com/photo-1547949003-9792a18a2601?w=500&h=550&fit=crop" alt="Men's crossbody bag accessory">
+          <button class="product-quick" aria-label="Quick add to cart">+</button>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Accessories</span>
+          <span class="product-name">Transit crossbody bag</span>
+          <div class="product-price"><strong>$38</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight" id="promo">
+  <div class="promo reveal">
+    <div class="promo-text">
+      <span class="eyebrow-label">Limited time</span>
+      <h2>End of season<br>sale — up to 40% off</h2>
+      <p>Stack savings on selected hoodies, jackets and accessories before the new collection lands. Stock is limited and won't be restocked.</p>
+      <div class="promo-code">VIBE20 <span>Apply at checkout for an extra 20% off</span></div>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary">Shop the sale</a>
+      </div>
+    </div>
+    <div class="promo-visual">
+      <img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=600&h=600&fit=crop" alt="Men wearing VibeWear streetwear outfits">
+    </div>
+  </div>
+</section>
+
+<section class="newsletter reveal" id="newsletter">
+  <h2>Join the VibeWear list</h2>
+  <p>Get early access to drops, member-only discounts, and styling tips — straight to your inbox, no spam.</p>
+  <form class="newsletter-form" id="newsletterForm">
+    <input type="email" placeholder="Enter your email" required aria-label="Email address">
+    <button type="submit" class="btn btn-primary" style="border-color:var(--lime);background:var(--lime);color:var(--charcoal);">Sign up</button>
+  </form>
+  <span class="newsletter-note" id="newsletterNote">By signing up you agree to receive marketing emails. Unsubscribe anytime.</span>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">vibe<span>wear</span></a>
+        <p>Streetwear and essentials designed for everyday movement. Made with intent, priced to wear often.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="TikTok">TT</a>
+          <a href="#" aria-label="X">X</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#products">New arrivals</a></li>
+          <li><a href="#products">Best sellers</a></li>
+          <li><a href="#promo">Sale</a></li>
+          <li><a href="#categories">Categories</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping & returns</a></li>
+          <li><a href="#">Size guide</a></li>
+          <li><a href="#">Track order</a></li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VibeWear. All rights reserved.</span>
+      <span>Privacy policy · Terms of service</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuToggle.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Scroll reveal animations
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Quick add feedback
+  document.querySelectorAll('.product-quick').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.textContent = '✓';
+      btn.style.background = 'var(--lime)';
+      btn.style.color = 'var(--charcoal)';
+      setTimeout(() => {
+        btn.textContent = '+';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1200);
+    });
+  });
+
+  // Newsletter form
+  const form = document.getElementById('newsletterForm');
+  const note = document.getElementById('newsletterNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = "You're on the list! Watch your inbox for early access.";
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
